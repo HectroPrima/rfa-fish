@@ -1,0 +1,17 @@
+/*
+Theme Name: RFA-Fish
+Author: Evgeny Stefanenko
+Description: 2016 child theme for WordPress
+Author URI: www.clarionlife.net
+Template: twentyeleven
+*/
+  
+@import url(../twentyeleven/style.css);
+
+.single #author-info {
+   background: #f9f9f9;
+   border-top: 1px solid #ddd;
+   border-bottom: 1px solid #ddd;
+   margin: 2.2em 0% 0 0%;
+   padding: 20px 35.4%;
+}
