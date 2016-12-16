@@ -1,10 +1,5 @@
 <?php
 
-function debug_sea( $obj ) {
-    echo "<pre>";
-    print_r($obj);
-}
-
 add_filter('body_class', 'fix_body_class_for_sidebar', 20, 2);
 function fix_body_class_for_sidebar($wp_classes, $extra_classes) {
     if( is_single() || is_page() ){ 
@@ -111,9 +106,23 @@ function register_post_types(){
         'supports'            => array('title','editor'), // 'title','editor','author','thumbnail','excerpt','trackbacks','custom-fields','comments','revisions','page-attributes','post-formats'
         'taxonomies'          => array('post_tag'),
         'has_archive'         => false,
-        'rewrite'             => true,
+        'rewrite'             => array( 'slug'=>'tag/%tagslist%', 'with_front'=>false, 'pages'=>false, 'feeds'=>false, 'feed'=>false ),
         'query_var'           => true,
     ) );
+}
+
+// генерация permalink для функции get_permalink()
+
+add_filter('post_type_link', 'mytags_permalink', 1, 2);
+
+function mytags_permalink( $permalink, $post ){
+    // выходим если это не наш тип записи: без холдера '%tagslist%'
+    if( strpos($permalink, '%tagslist%') === FALSE )
+        return $permalink;
+    $tags = get_tags_slug_array($post->ID);
+    if ($tags)
+        return home_url( 'tag/' . implode($tags,'+') );
+    return home_url( 'tag' );
 }
 
 // Раздел "помощь" типа записи mytags
