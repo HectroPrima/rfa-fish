@@ -4,14 +4,34 @@ Author: Evgeny Stefanenko
 Description: 2016 child theme for WordPress
 Author URI: www.clarionlife.net
 Template: twentyeleven
+Version: 1.1
 */
-  
 @import url(../twentyeleven/style.css);
 
 .single #author-info {
-   background: #f9f9f9;
-   border-top: 1px solid #ddd;
-   border-bottom: 1px solid #ddd;
-   margin: 2.2em 0% 0 0%;
-   padding: 20px 35.4%;
+    background: #f9f9f9;
+    border-top: 1px solid #ddd;
+    border-bottom: 1px solid #ddd;
+    margin: 2.2em 0% 0 0%;
+    padding: 20px 35.4%;
+}
+
+.user_info {
+    width: 500px;
+    clear: both;
+}
+
+.user_image {
+    width: 100px;
+    float: left;
+}
+
+.user_text {
+    max-width: 380px;
+    float: left;
+    padding: 0 10px 10px 10px;
+}
+
+.users_end {
+    clear: both;
 }

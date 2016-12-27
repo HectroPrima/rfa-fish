@@ -195,4 +195,46 @@ function filter_function_name_11( $title, $id ) {
     return do_shortcode($title);
 }
 
+add_shortcode( 'user_list', 'sea_user_list_shortcode' );
+function sea_user_list_shortcode( $atts ) {
+    $total_users = count_users();
+    $total_users = $total_users['total_users'];
+    $paged = get_query_var('paged');
+    $number = 10; // ie. 20 users page page 
+    $args = array(
+        'fields'=>'all',
+        'offset' => $paged ? ($paged - 1) * $number : 0,
+        'number' => $number
+    );
+    $users = get_users($args);
+    $result = "";
+    foreach ($users as $user)
+    {
+        $result = $result."\n".'<div class="user_info"><div class="user_image"><img src="'.get_avatar_url($user->ID).'"\>';
+        $result = $result.'</div>';
+        $result = $result.'<div class="user_text">';
+        $user_info = get_userdata($user->ID);
+        if ($user_info->first_name)
+            $result = $result.'<b>'.$user_info->first_name.' '.$user_info->last_name.'</b>';
+        else
+            $result = $result.'<b>'.$user_info->display_name.'</b>';
+        $result = $result.'<br>'.$user_info->user_description;
+        $result = $result.'</div>';
+        $result = $result.'</div>'."\n";
+    }
+    $result = $result.'<div class="users_end"></div>';
+    if($total_users > $number){
+      $pl_args = array(
+         'base'     => add_query_arg('paged','%#%'),
+         'format'   => '',
+         'total'    => ceil($total_users / $number),
+         'current'  => max(1, $paged),
+      );
+      if($GLOBALS['wp_rewrite']->using_permalinks())
+            $pl_args['base'] = user_trailingslashit(trailingslashit(get_pagenum_link(1)).'page/%#%/', 'paged');
+      $result .= "<br><br><div style=\"text-align:center\">".paginate_links($pl_args)."</div>";
+    }
+    return $result;
+}
+
 ?>
