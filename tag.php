@@ -6,9 +6,8 @@
  * @subpackage Twenty_Eleven
  * @since Twenty Eleven 1.0
  */
-
-get_header(); 
 $data = get_mytags_desc();
+get_header(); 
 ?>
 
         <section id="primary">
@@ -18,7 +17,7 @@ $data = get_mytags_desc();
 
                 <header class="page-header">
                     <?php
-                        if ($data->post_title) {
+                        if (isset($data) && $data->post_title) {
                             echo '<h1 class="entry-title">'.$data->post_title."<h1>";
                         } else {
                             ?><h1 class="page-title"><?php
@@ -28,7 +27,7 @@ $data = get_mytags_desc();
                     ?>
 
                     <?php
-                        if ($data->post_title) {
+                        if (isset($data) && $data->post_title) {
                             echo $data->post_content;
                             edit_post_link( __( 'Edit', 'twentyeleven' ), '<br><span class="edit-link">', '</span>', $data->ID );
                         } else {
